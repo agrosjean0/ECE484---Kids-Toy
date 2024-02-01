@@ -1,1 +1,1 @@
-# ECE484 Rotary Potentiometer
+# ECE484 Hasbro Simon
