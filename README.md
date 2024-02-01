@@ -1,1 +1,1 @@
-# ECE484---Kids-Toy
+# ECE484 Rotary Potentiometer
