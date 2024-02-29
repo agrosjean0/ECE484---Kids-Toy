@@ -1,1 +1,1 @@
-# ECE484 Hasbro Simon
+# ECE484 Individual Project Pinball Display
