@@ -76,84 +76,85 @@ void loop() {
     // Serial.println(pinTrig);
     // Serial.println(prevTrig);
     value = rxVal;
+        // Extracting individual digits
+        int thousands = value / 1000;
+        int hundreds = (value / 100) % 10;
+        int tens = (value / 10) % 10;
+        int ones = value % 10;
 
-    // Print Score and if val increased good sound
+        // Serial.println(pinTrig);
+    // Serial.println(prevTrig);
+        
+        // Go to first digit
+        digitalWrite(D1, HIGH);
+        digitalWrite(D2,  LOW);
+        digitalWrite(D3, LOW);
+        digitalWrite(D4, LOW); 
+        value_select(thousands);
+        delay(1);               // wait for  a second
+      
+        // Go to second digit
+        digitalWrite(D1, LOW);
+        digitalWrite(D2, HIGH);
+        digitalWrite(D3,  LOW);
+        digitalWrite(D4, LOW);
+        value_select(hundreds);
+        delay(1);               // wait for a second
+      
+        // Go to third digit
+        digitalWrite(D1, LOW);
+        digitalWrite(D2, LOW);
+        digitalWrite(D3,  HIGH);
+        digitalWrite(D4, LOW); 
+        value_select(tens);
+        delay(1);               // wait for a second
+      
+        // Go to fourth digit
+        digitalWrite(D1, LOW);
+        digitalWrite(D2, LOW);
+        digitalWrite(D3, LOW);
+        digitalWrite(D4, HIGH); 
+        value_select(ones);
+        delay(1);               // wait for a second
+
+        // Print Score and if val increased good sound
     if (pinTrig != prevTrig) {
-      if (pinTrig == 4 || pinTrig == 24 || pinTrig == 5 || pinTrig == 25 || pinTrig == 6 || pinTrig == 26) {
+        if (pinTrig == 4 || pinTrig == 24 || pinTrig == 5 || pinTrig == 25 || pinTrig == 6 || pinTrig == 26) {
         tone(piezoPin,NOTE_E6,125);
-              delay(130);
+              delay_2(130, thousands, hundreds, tens, ones);
               tone(piezoPin,NOTE_G6,125);
-              delay(130);
+              delay_2(130, thousands, hundreds, tens, ones);
               tone(piezoPin,NOTE_E7,125);
-              delay(130);
+              delay_2(130, thousands, hundreds, tens, ones);
               tone(piezoPin,NOTE_C7,125);
-              delay(130);
+              delay_2(130, thousands, hundreds, tens, ones);
               tone(piezoPin,NOTE_D7,125);
-              delay(130);
+              delay_2(130, thousands, hundreds, tens, ones);
               tone(piezoPin,NOTE_G7,125);
-              delay(125);
+              delay_2(125, thousands, hundreds, tens, ones);
               noTone(piezoPin);
-      } else if (pinTrig == 3 || pinTrig == 23) {
+        } else if (pinTrig == 3 || pinTrig == 23) {
              tone(piezoPin,NOTE_D4);
-             delay(250);
+             delay_2(250, thousands, hundreds, tens, ones);
              tone(piezoPin,NOTE_CS4);
-             delay(250);
+             delay_2(250, thousands, hundreds, tens, ones);
              tone(piezoPin,NOTE_C4);
-             delay(250);
+             delay_2(250, thousands, hundreds, tens, ones);
              tone(piezoPin,NOTE_B3);
-             delay(500);
+             delay_2(500, thousands, hundreds, tens, ones);
              noTone(piezoPin);
              ballCt = ballCt + 1; 
-      }
-    }
-    
-    // Extracting individual digits
-    int thousands = value / 1000;
-    int hundreds = (value / 100) % 10;
-    int tens = (value / 10) % 10;
-    int ones = value % 10;
-  
-    // Go to first digit
-    digitalWrite(D1, HIGH);
-    digitalWrite(D2,  LOW);
-    digitalWrite(D3, LOW);
-    digitalWrite(D4, LOW); 
-    value_select(thousands);
-    delay(1);               // wait for  a second
-  
-    // Go to second digit
-    digitalWrite(D1, LOW);
-    digitalWrite(D2, HIGH);
-    digitalWrite(D3,  LOW);
-    digitalWrite(D4, LOW);
-    value_select(hundreds);
-    delay(1);               // wait for a second
-  
-    // Go to third digit
-    digitalWrite(D1, LOW);
-    digitalWrite(D2, LOW);
-    digitalWrite(D3,  HIGH);
-    digitalWrite(D4, LOW); 
-    value_select(tens);
-    delay(1);               // wait for a second
-  
-    // Go to fourth digit
-    digitalWrite(D1, LOW);
-    digitalWrite(D2, LOW);
-    digitalWrite(D3, LOW);
-    digitalWrite(D4, HIGH); 
-    value_select(ones);
-    delay(1);               // wait for a second
+        }
+   }
 
   // Game over response here 
-  // reset score 
   if (ballCt == 3) {
     int rxVal = 0;
-    int value = 0000; 
+    int value = 0; 
     ballCt = 0; 
   }
   prevTrig = pinTrig; 
-  // delay(500);
+  //delay(1000);
 }
 
 void nothing() {
@@ -301,4 +302,42 @@ void value_select(int value) {
       nothing();
       break;
   }
+}
+
+void delay_2(int time, int thousands, int hundreds, int tens, int ones) {
+  for (int i = 0; i < time; i=i+5) {
+    delay(1); 
+    // Go to first digit
+        digitalWrite(D1, HIGH);
+        digitalWrite(D2,  LOW);
+        digitalWrite(D3, LOW);
+        digitalWrite(D4, LOW); 
+        value_select(thousands);
+        delay(1);               // wait for  a second
+      
+        // Go to second digit
+        digitalWrite(D1, LOW);
+        digitalWrite(D2, HIGH);
+        digitalWrite(D3,  LOW);
+        digitalWrite(D4, LOW);
+        value_select(hundreds);
+        delay(1);               // wait for a second
+      
+        // Go to third digit
+        digitalWrite(D1, LOW);
+        digitalWrite(D2, LOW);
+        digitalWrite(D3,  HIGH);
+        digitalWrite(D4, LOW); 
+        value_select(tens);
+        delay(1);               // wait for a second
+      
+        // Go to fourth digit
+        digitalWrite(D1, LOW);
+        digitalWrite(D2, LOW);
+        digitalWrite(D3, LOW);
+        digitalWrite(D4, HIGH); 
+        value_select(ones);
+        delay(1);               // wait for a second
+  }
+  
 }
